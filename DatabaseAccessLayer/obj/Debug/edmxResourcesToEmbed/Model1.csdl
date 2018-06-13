@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="AdminPanelModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Category_SubCategory" Relationship="Self.FK__Category___Categ__1CF15040" FromRole="Category" ToRole="Category_SubCategory" />
+    <NavigationProperty Name="SubCategories" Relationship="Self.FK__SubCatego__Paren__0EA330E9" FromRole="Category" ToRole="SubCategory" />
+  </EntityType>
+  <EntityType Name="Category_SubCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Category" Type="Int32" Nullable="false" />
+    <Property Name="SubCategory" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Category1" Relationship="Self.FK__Category___Categ__1CF15040" FromRole="Category_SubCategory" ToRole="Category" />
+    <NavigationProperty Name="SubCategory1" Relationship="Self.FK__Category___SubCa__1DE57479" FromRole="Category_SubCategory" ToRole="SubCategory" />
+  </EntityType>
+  <EntityType Name="Content">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TextContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ParentSubCategory" Type="Int32" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="SubCategory" Relationship="Self.FK__Content__ParentS__1367E606" FromRole="Content" ToRole="SubCategory" />
+  </EntityType>
+  <EntityType Name="Image">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ImagePath" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ParentSubCategory" Type="Int32" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="SubCategory" Relationship="Self.FK__Images__ParentSu__182C9B23" FromRole="Images" ToRole="SubCategory" />
+  </EntityType>
+  <EntityType Name="SubCategory">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="ParentCategory" Type="Int32" Nullable="false" />
+    <Property Name="UpdateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Category" Relationship="Self.FK__SubCatego__Paren__0EA330E9" FromRole="SubCategory" ToRole="Category" />
+    <NavigationProperty Name="Category_SubCategory" Relationship="Self.FK__Category___SubCa__1DE57479" FromRole="SubCategory" ToRole="Category_SubCategory" />
+    <NavigationProperty Name="Contents" Relationship="Self.FK__Content__ParentS__1367E606" FromRole="SubCategory" ToRole="Content" />
+    <NavigationProperty Name="Images" Relationship="Self.FK__Images__ParentSu__182C9B23" FromRole="SubCategory" ToRole="Images" />
+  </EntityType>
+  <Association Name="FK__Category___Categ__1CF15040">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="Category_SubCategory" Type="Self.Category_SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category_SubCategory">
+        <PropertyRef Name="Category" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SubCatego__Paren__0EA330E9">
+    <End Role="Category" Type="Self.Category" Multiplicity="1" />
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="SubCategory">
+        <PropertyRef Name="ParentCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Category___SubCa__1DE57479">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+    <End Role="Category_SubCategory" Type="Self.Category_SubCategory" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Category_SubCategory">
+        <PropertyRef Name="SubCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Content__ParentS__1367E606">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+    <End Role="Content" Type="Self.Content" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Content">
+        <PropertyRef Name="ParentSubCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Images__ParentSu__182C9B23">
+    <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="1" />
+    <End Role="Images" Type="Self.Image" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SubCategory">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Images">
+        <PropertyRef Name="ParentSubCategory" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="AdminPanelEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="Category_SubCategory" EntityType="Self.Category_SubCategory" />
+    <EntitySet Name="Contents" EntityType="Self.Content" />
+    <EntitySet Name="Images" EntityType="Self.Image" />
+    <EntitySet Name="SubCategories" EntityType="Self.SubCategory" />
+    <AssociationSet Name="FK__Category___Categ__1CF15040" Association="Self.FK__Category___Categ__1CF15040">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="Category_SubCategory" EntitySet="Category_SubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SubCatego__Paren__0EA330E9" Association="Self.FK__SubCatego__Paren__0EA330E9">
+      <End Role="Category" EntitySet="Categories" />
+      <End Role="SubCategory" EntitySet="SubCategories" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Category___SubCa__1DE57479" Association="Self.FK__Category___SubCa__1DE57479">
+      <End Role="SubCategory" EntitySet="SubCategories" />
+      <End Role="Category_SubCategory" EntitySet="Category_SubCategory" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Content__ParentS__1367E606" Association="Self.FK__Content__ParentS__1367E606">
+      <End Role="SubCategory" EntitySet="SubCategories" />
+      <End Role="Content" EntitySet="Contents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Images__ParentSu__182C9B23" Association="Self.FK__Images__ParentSu__182C9B23">
+      <End Role="SubCategory" EntitySet="SubCategories" />
+      <End Role="Images" EntitySet="Images" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

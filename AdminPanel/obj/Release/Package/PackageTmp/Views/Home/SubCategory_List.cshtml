@@ -1,0 +1,43 @@
+﻿@model IEnumerable<DatabaseAccessLayer.SubCategory>
+
+@{
+    ViewBag.Title = "SubCategory_List";
+}
+
+<h2>SubCategory_List</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UpdateDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Name)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UpdateDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ParentCategory)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { Href = "#" }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { Href = "#" }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { Href = "#" })
+        </td>
+    </tr>
+}
+
+</table>

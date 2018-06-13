@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2b59a358fcb74d90ad159200ed05bb71" Name="Diagram1">
+        <EntityTypeShape EntityType="AdminPanelModel.Category" Width="1.5" PointX="0.75" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdminPanelModel.Category_SubCategory" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdminPanelModel.Content" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdminPanelModel.Image" Width="1.5" PointX="5.25" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="AdminPanelModel.SubCategory" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <AssociationConnector Association="AdminPanelModel.FK__Category___Categ__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="AdminPanelModel.FK__SubCatego__Paren__0EA330E9" ManuallyRouted="false" />
+        <AssociationConnector Association="AdminPanelModel.FK__Category___SubCa__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="AdminPanelModel.FK__Content__ParentS__1367E606" ManuallyRouted="false" />
+        <AssociationConnector Association="AdminPanelModel.FK__Images__ParentSu__182C9B23" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
