@@ -7,3 +7,4 @@ c:\users\abhishek umar\documents\visual studio 2015\Projects\AdminPanel\Database
 c:\users\abhishek umar\documents\visual studio 2015\Projects\AdminPanel\DatabaseAccessLayer\bin\Debug\EntityFramework.SqlServer.xml
 c:\users\abhishek umar\documents\visual studio 2015\Projects\AdminPanel\DatabaseAccessLayer\obj\Debug\DatabaseAccessLayer.dll
 c:\users\abhishek umar\documents\visual studio 2015\Projects\AdminPanel\DatabaseAccessLayer\obj\Debug\DatabaseAccessLayer.pdb
+C:\Users\Abhishek Umar\Documents\Visual Studio 2015\Projects\AdminPanel\DatabaseAccessLayer\obj\Debug\DatabaseAccessLayer.csprojResolveAssemblyReference.cache

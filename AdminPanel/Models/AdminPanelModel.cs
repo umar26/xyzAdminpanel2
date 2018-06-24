@@ -41,17 +41,47 @@ namespace AdminPanel.Models
         public IEnumerable<SelectListItem> SubCategories { get; set; }
         public int SelectedSubCategory { get; set; }
 
+        [AllowHtml]
         public string Content { get; set; }
 
         public List<HttpPostedFileBase> Files { get; set; }
     }
 
+    public class EditImageAndContentModel
+    {
+        public EditImageAndContentModel()
+        {
+            Files = new List<HttpPostedFileBase>();
+        }
+
+        
+        public int CategoryName { get; set; }
+
+        public IEnumerable<SelectListItem> SubCategories { get; set; }
+        public int SubCategoryName { get; set; }
+
+        [AllowHtml]
+        public string Content { get; set; }
+
+        public List<HttpPostedFileBase> Files { get; set; }
+
+    }
     public class ImageContentModelForList
-    {   public int Id { get; set; }
+    {
+        public ImageContentModelForList()
+        {
+          Files=  new List<HttpPostedFileBase>();
+        }
+        public int Id { get; set; }
         public string ParentCategory { get; set; }
         public string SubCategory { get; set; }
+
+        [AllowHtml]
         public string Content { get; set; }
+        public int ContentId { get; set;}
+        public int ImageId { get; set;}
         public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set;}
+        public List<HttpPostedFileBase> Files { get; set; }
     }
 }

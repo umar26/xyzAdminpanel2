@@ -78,7 +78,7 @@ namespace AdminPanel.apiController
             string Imagestr = JsonConvert.SerializeObject(apiImages);
             string Contentstr = JsonConvert.SerializeObject(apiContent);
 
-            string finalstr = "{'data': {'contentArray':" + Imagestr + ","+"'imageArray':" + Contentstr + "}}";
+            string finalstr = "{'data': {'imageArray':" + Imagestr + ","+"'contentArray':" + Contentstr + "}}";
             return Ok(JsonConvert.DeserializeObject(finalstr));
         }
         // PUT: api/SubCategories/5

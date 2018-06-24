@@ -110,7 +110,7 @@ namespace AdminPanel.Controllers
             string fileName = "";
             try
             {
-                if (file.ContentLength > 0)
+                if (file != null &&  file.ContentLength > 0)
                 {
                   
                     string extension=Path.GetExtension(file.FileName);
@@ -154,6 +154,57 @@ namespace AdminPanel.Controllers
                CreatedDate=r.UpdateDate
             }));
             return View(Model);
+        }
+
+        public ActionResult EditImageContent( int Id)
+        {
+
+            Image imagedata = BL.GetImageById(Id);
+            Content contentdata = BL.GetContentById(Id);
+
+            ImageContentModelForList model = new ImageContentModelForList();
+            model.Content = contentdata.TextContent;
+            model.ContentId = contentdata.Id;
+            model.ImageUrl = "/Images/" + imagedata.ImagePath;
+            model.ImageId = imagedata.Id;
+            model.SubCategory = imagedata.SubCategory.Name;
+            model.Id = Id;
+
+            return View(model);
+            
+        }
+        [HttpPost]
+        public ActionResult EditImageContent(ImageContentModelForList Model)
+        {
+            HttpPostedFileBase file = Model.Files[0];
+            string fileName = "";
+            try
+            {
+                if (file!=null && file.ContentLength > 0)
+                {
+
+                    string extension = Path.GetExtension(file.FileName);
+                    fileName = Guid.NewGuid().ToString() + extension;
+                    string filePath = Path.Combine(Server.MapPath("~/Images"), fileName);
+                    file.SaveAs(filePath);
+                }
+                BL.UpdateImageContent(Model.ContentId, Model.ImageId, Model.Content, fileName);
+                TempData["SuccessMsg"] = "ImageContent is Updated Successfully";
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorMsg"] = "ImageContent is not  Updated Successfully";
+            }
+            return RedirectToAction("EditImageContent", new { SubCategoryId = Model.Id });
+        }
+
+
+        public ActionResult DeleteImageContent(int Id)
+        {
+
+            BL.DeleteImageContent(Id);
+            
+            return RedirectToAction("ImageContent_List");
         }
     }
 }
