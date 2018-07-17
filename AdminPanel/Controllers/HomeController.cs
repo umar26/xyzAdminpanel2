@@ -49,13 +49,14 @@ namespace AdminPanel.Controllers
                 Name = Model.Category,
             });
             TempData["SuccessMsg"] = "Category is Added Successfully";
-            return View(Model);
+            return RedirectToAction("Category");
         }
 
         public ActionResult Category_List()
         {
             //BLCategory BL = new BLCategory();
-            return View(BL.GetCategory());
+            List<Category> List = BL.GetCategory();
+            return View(List);
         }
         public ActionResult SubCategory()
         {
@@ -78,7 +79,7 @@ namespace AdminPanel.Controllers
             });
             Model.Categories = BL.CategoryDDL();
             TempData["SuccessMsg"] = "Sub Category is Added Successfully";
-            return View(Model);
+            return RedirectToAction("SubCategory");
         }
 
         public ActionResult SubCategory_List()
@@ -137,7 +138,7 @@ namespace AdminPanel.Controllers
             });
             Model.SubCategories = BL.SubCategoryDDLByCategory();
             TempData["SuccessMsg"] = "Image is Added Successfully";
-            return View(Model);
+            return RedirectToAction("ImageUpload");
         }
 
         public ActionResult ImageContent_List()
@@ -205,6 +206,22 @@ namespace AdminPanel.Controllers
             BL.DeleteImageContent(Id);
             
             return RedirectToAction("ImageContent_List");
+        }
+
+        [HttpPost]
+        public ActionResult Edit_Category(string Id,string Text)
+        {
+            BL.UpdateCategory(Convert.ToInt32(Id), Text);
+            
+            
+            return Json("true");
+        }
+
+        [HttpDelete]
+        public ActionResult Delete_Category(string Id)
+        {
+            BL.DeleteCategory(Convert.ToInt32(Id));
+            return Json("true");
         }
     }
 }

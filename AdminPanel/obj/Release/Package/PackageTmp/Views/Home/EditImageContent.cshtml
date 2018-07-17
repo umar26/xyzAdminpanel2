@@ -1,0 +1,114 @@
+﻿@model AdminPanel.Models.ImageContentModelForList
+
+@{
+    ViewBag.Title = "EditImageContent";
+}
+
+<h2>EditImageContent</h2>
+
+
+@using (Html.BeginForm("EditImageContent", "Home",FormMethod.Post, new { encType = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ImageContentModel</h4>
+        <hr />
+        <div style="color:green;">
+            <b>@TempData["SuccessMsg"]</b>
+        </div>
+        <div style="color:red;">
+            <b>@TempData["ErrorMsg"]</b>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model=>model.ImageId)
+        @Html.HiddenFor(model => model.ContentId)
+        <div class="form-group">
+            @Html.LabelFor(model => model.ParentCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Label("ParentCategory",Model.ParentCategory, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ParentCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.SubCategory, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Label("Subcategory",Model.SubCategory, new { htmlAttributes = new {  @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.SubCategory, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Content, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Content, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Content, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ImageUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img src="@Model.ImageUrl" alt="Photoes" style="width:100px;height:100px" />
+                @Html.ValidationMessageFor(model => model.ImageUrl, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Files, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Files, new { @class = "form-control", type = "file", name = "Files" })
+                @Html.ValidationMessageFor(model => model.Files, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Label("CreatedDate",Model.CreatedDate.ToLongTimeString(), new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Update" class="btn btn-default" />
+            </div>
+        </div>
+
+        
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/ckeditor/ckeditor.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        var editor = CKEDITOR.replace('Content');
+        
+            // getData() returns CKEditor's HTML content.
+            
+            CKEDITOR.instances["Content"].setData($("#Content").val())
+        
+            editor.on('change', function (evt) {
+                // getData() returns CKEditor's HTML content.
+                console.log('editor content ' + evt.editor.getData());
+                $("#Content").val(evt.editor.getData());
+            });
+    });
+
+
+</script>

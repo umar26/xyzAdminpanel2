@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.Transactions;
 namespace BusinessLayer
 {
     public class BLCategory
@@ -153,6 +154,82 @@ namespace BusinessLayer
                     db.Contents.Remove(dbEntityContent);
 
                     db.SaveChanges();
+                    t.Commit();
+                    return 1;
+                }
+                catch (Exception ex)
+                {
+                    t.Rollback();
+                    return 0;
+                }
+            }
+
+        }
+
+        public int UpdateCategory(int Id, string Name)
+        {
+            Category entity = db.Categories.Where(r => r.Id == Id).FirstOrDefault();
+            entity.Name = Name;
+           return db.SaveChanges();
+        }
+
+        public int DeleteCategory(int id)
+        {
+
+
+            using (DbContextTransaction t = db.Database.BeginTransaction()) 
+            {
+                try
+                {
+                    List<Category_SubCategory> Cat_Subcate = db.Category_SubCategory.ToList();
+                    List<SubCategory> SubCategory = db.SubCategories.ToList();
+                    List<int> subcatlist = Cat_Subcate.Where(r => r.Category == id).Select(k => k.SubCategory).ToList();
+
+                    List<Image> Images = db.Images.ToList();
+                    List<Content> Content = db.Contents.ToList();
+
+                    foreach (var item in subcatlist)
+                    {
+                        Image img = Images.Where(r => r.ParentSubCategory == item).FirstOrDefault();
+                        Content cont = Content.Where(r => r.ParentSubCategory == item).FirstOrDefault();
+                        //Category_SubCategory cat_sub = Cat_Subcate.Where(r => r.SubCategory == item).FirstOrDefault();
+                        //SubCategory subcat = SubCategory.Where(r => r.Id == item).FirstOrDefault();
+                        if (img != null)
+                            db.Images.Remove(img);
+                        if (cont != null)
+                            db.Contents.Remove(cont);
+                        //if(cat_sub!=null)
+                        //db.Category_SubCategory.Remove(cat_sub);
+                        //if(subcat!=null)
+                        //db.SubCategories.Remove(subcat);
+                    }
+
+                    db.SaveChanges();
+                    foreach (var item in subcatlist)
+                    {
+                        Category_SubCategory cat_sub = Cat_Subcate.Where(r => r.SubCategory == item).FirstOrDefault();
+                        // SubCategory subcat = SubCategory.Where(r => r.Id == item).FirstOrDefault();
+                        if (cat_sub != null)
+                            db.Category_SubCategory.Remove(cat_sub);
+                        //if (subcat != null)
+                        //    db.SubCategories.Remove(subcat);
+                    }
+                    db.SaveChanges();
+
+                 
+                    foreach (var item in subcatlist)
+                    {
+                        SubCategory subcat = SubCategory.Where(r => r.Id == item).FirstOrDefault();
+                        if (subcat != null)
+                            db.SubCategories.Remove(subcat);
+                    }
+
+                    db.SaveChanges();
+                    //  Category category= db.Categories.Where(r => r.Id == id).FirstOrDefault();
+                    //db.Categories.Remove(category);
+
+
+                    
                     t.Commit();
                     return 1;
                 }

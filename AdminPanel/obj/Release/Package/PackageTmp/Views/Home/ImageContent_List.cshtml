@@ -48,9 +48,8 @@
             @Html.DisplayFor(modelItem => item.CreatedDate)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { Href = "#" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { Href = "#" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { Href = "#" })
+            @Html.ActionLink("Edit", "EditImageContent", "Home", new { Id = item.Id }, new {target="_blank" }) |
+            @Html.ActionLink("Delete", "DeleteImageContent", "Home", new { Id=item.Id }, new {  })
         </td>
     </tr>
 }

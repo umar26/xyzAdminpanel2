@@ -16,15 +16,86 @@
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="categorylabel">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
+        <td class="categorytext" style="display:none">
+            @Html.TextBoxFor(modelItem => item.Name)
+        </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id },new { Href="#"}) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id },new { Href = "#" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { Href = "#" })
+            @Html.ActionLink("Edit", "Edit",new { id = item.Id}, new { @class="Edit_Category",Href="#",  id = item.Id, value=item.Name}) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { @class = "Delete_Category", Href = "#", id = item.Id })
         </td>
     </tr>
 }
 
 </table>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on("click", ".Edit_Category", function () {
+            var $curele = $(this);
+            var currTR = $curele.parents("tr");
+            if($curele.text()=="Edit")
+            {
+               $curele.text("Update");
+               
+               currTR.find("td.categorytext").css("display", "block");
+               currTR.find("td.categorytext input[type='text']").val($curele.attr("value"));
+                currTR.find("td.categorylabel").css("display", "none");
+                return true;
+            }
+            else if($curele.text()=="Update")
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Edit_Category", "Home")',
+                    dataType: 'text',
+                    data: { Id:$curele.attr("Id"), Text: currTR.find("td.categorytext [type='text']").val() },
+                    success: function (result) {
+                        console.log(result)
+                        if (result) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
+        })
+
+        $(document).on("click", ".Delete_Category", function () {
+            var $curele = $(this);
+            var res = window.confirm("Do you want to delete Category. it will delete all sub categories as well");
+            if(res==true)
+            {
+
+                $.ajax({
+                    type: 'Delete',
+                    url: '@Url.Action("Delete_Category", "Home")',
+                    dataType: 'text',
+                    data: { Id: $curele.attr("Id") },
+                    success: function (result) {
+                        console.log(result)
+                        if (result) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+
+        });
+
+    });
+        
+
+</script>

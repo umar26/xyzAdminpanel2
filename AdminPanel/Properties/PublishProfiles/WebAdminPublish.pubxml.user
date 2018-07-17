@@ -13,7 +13,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2018 15:05:09</publishTime>
     </File>
     <File Include="bin/AdminPanel.dll">
-      <publishTime>06/18/2018 23:10:25</publishTime>
+      <publishTime>06/24/2018 14:44:01</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
       <publishTime>02/22/2013 08:43:40</publishTime>
@@ -22,10 +22,10 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2018 15:05:09</publishTime>
     </File>
     <File Include="bin/BusinessLayer.dll">
-      <publishTime>03/28/2018 01:36:18</publishTime>
+      <publishTime>06/24/2018 14:43:55</publishTime>
     </File>
     <File Include="bin/DatabaseAccessLayer.dll">
-      <publishTime>03/24/2018 21:57:22</publishTime>
+      <publishTime>06/24/2018 14:43:55</publishTime>
     </File>
     <File Include="bin/EntityFramework.dll">
       <publishTime>03/02/2015 09:32:26</publishTime>
@@ -1306,7 +1306,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>03/17/2018 15:04:44</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>06/16/2018 14:42:29</publishTime>
+      <publishTime>06/24/2018 14:39:47</publishTime>
     </File>
     <File Include="Views/Account/ConfirmEmail.cshtml">
       <publishTime>03/17/2018 15:04:47</publishTime>
@@ -1356,8 +1356,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="Views/Home/Contact.cshtml">
       <publishTime>03/17/2018 15:04:10</publishTime>
     </File>
+    <File Include="Views/Home/EditImageContent.cshtml">
+      <publishTime>06/24/2018 13:41:57</publishTime>
+    </File>
     <File Include="Views/Home/ImageContent_List.cshtml">
-      <publishTime>03/24/2018 22:06:15</publishTime>
+      <publishTime>06/24/2018 14:37:15</publishTime>
     </File>
     <File Include="Views/Home/ImageUpload.cshtml">
       <publishTime>06/17/2018 12:47:00</publishTime>
