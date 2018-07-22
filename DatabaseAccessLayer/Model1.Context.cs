@@ -18,9 +18,7 @@ namespace DatabaseAccessLayer
         public AdminPanelEntities()
             : base("name=AdminPanelEntities")
         {
-            this.Configuration.ProxyCreationEnabled = false;
         }
-        
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
