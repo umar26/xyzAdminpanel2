@@ -12,32 +12,95 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
-            @Html.DisplayNameFor(model => model.UpdateDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
+        <td class="subcategorylabel">
             @Html.DisplayFor(modelItem => item.Name)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.UpdateDate)
+        <td class="subcategorytext" style="display:none">
+            @Html.TextBoxFor(modelItem => item.Name)
         </td>
-        <td>
+        @*<td>
             @Html.DisplayFor(modelItem => item.ParentCategory)
-        </td>
+        </td>*@
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }, new { Href = "#" }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }, new { Href = "#" }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id }, new { Href = "#" })
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "Edit_SubCategory", Href = "#", id = item.Id, value = item.Name }) |
+            
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "Delete_SubCategory", Href = "#", id = item.Id })
         </td>
     </tr>
 }
 
 </table>
+@Scripts.Render("~/bundles/jquery")
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(document).on("click", ".Edit_SubCategory", function () {
+            var $curele = $(this);
+            var currTR = $curele.parents("tr");
+            if($curele.text()=="Edit")
+            {
+               $curele.text("Update");
+
+               currTR.find("td.subcategorytext").css("display", "block");
+               currTR.find("td.subcategorytext input[type='text']").val($curele.attr("value"));
+               currTR.find("td.subcategorylabel").css("display", "none");
+                return true;
+            }
+            else if($curele.text()=="Update")
+            {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Edit_SubCategory", "Home")',
+                    dataType: 'text',
+                    data: { Id:$curele.attr("Id"), Text: currTR.find("td.subcategorytext [type='text']").val() },
+                    success: function (result) {
+                        console.log(result)
+                        if (result) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
+        })
+
+        $(document).on("click", ".Delete_SubCategory", function () {
+            var $curele = $(this);
+            var res = window.confirm("Do you want to delete sub Category. it will delete all sub categories related data as image and content as well");
+            if(res==true)
+            {
+
+                $.ajax({
+                    type: 'Delete',
+                    url: '@Url.Action("Delete_SubCategory", "Home")',
+                    dataType: 'text',
+                    data: { Id: $curele.attr("Id") },
+                    success: function (result) {
+                        console.log(result)
+                        if (result) {
+                            window.location.reload();
+                        }
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+            }
+            else
+            {
+                return false;
+            }
+
+        });
+
+    });
+
+
+</script>

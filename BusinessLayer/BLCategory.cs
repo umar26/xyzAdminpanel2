@@ -173,6 +173,13 @@ namespace BusinessLayer
             return db.SaveChanges();
         }
 
+        public int UpdateSubCategory(int Id, string Name)
+        {
+            SubCategory entity = db.SubCategories.Where(r => r.Id == Id).FirstOrDefault();
+            entity.Name = Name;
+            return db.SaveChanges();
+        }
+
         public int DeleteCategory(int id)
         {
 
@@ -184,17 +191,38 @@ namespace BusinessLayer
                     List<Category_SubCategory> Cat_Subcate = db.Category_SubCategory.ToList();
                     List<SubCategory> SubCategory = db.SubCategories.ToList();
                     List<int> subcatlist = Cat_Subcate.Where(r => r.Category == id).Select(k => k.SubCategory).ToList();
-                    
+
                     foreach (var item in subcatlist)
                     {
                         SubCategory subcat = SubCategory.Where(r => r.Id == item).FirstOrDefault();
                         if (subcat != null)
                             db.SubCategories.Remove(subcat);
                     }
-                    
+
                     Category category = db.Categories.Where(r => r.Id == id).FirstOrDefault();
                     db.Categories.Remove(category);
-                    
+
+                    db.SaveChanges();
+                    t.Commit();
+                    return 1;
+                }
+                catch (Exception ex)
+                {
+                    t.Rollback();
+                    return 0;
+                }
+            }
+
+        }
+
+        public int DeleteSubCategory(int id)
+        {
+            using (DbContextTransaction t = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    SubCategory SubCategory = db.SubCategories.Where(r => r.Id == id).FirstOrDefault();
+                    db.SubCategories.Remove(SubCategory);
                     db.SaveChanges();
                     t.Commit();
                     return 1;

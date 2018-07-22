@@ -223,5 +223,21 @@ namespace AdminPanel.Controllers
             BL.DeleteCategory(Convert.ToInt32(Id));
             return Json("true");
         }
+
+        [HttpPost]
+        public ActionResult Edit_SubCategory(string Id, string Text)
+        {
+            BL.UpdateSubCategory(Convert.ToInt32(Id), Text);
+
+
+            return Json("true");
+        }
+
+        [HttpDelete]
+        public ActionResult Delete_SubCategory(string Id)
+        {
+            BL.DeleteSubCategory(Convert.ToInt32(Id));
+            return Json("true");
+        }
     }
 }
